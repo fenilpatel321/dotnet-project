@@ -1,0 +1,5 @@
+@model Product
+@{ ViewData["Title"] = "Edit Product"; ViewData["SubmitLabel"] = "Save Changes"; }
+<div class="page-heading"><div><p class="eyebrow mb-1">UPDATE RECORD</p><h1 class="h2 fw-bold mb-1">Edit product</h1><p class="text-secondary mb-0">Update information for @Model.Name.</p></div><a asp-action="Index" class="btn btn-outline-secondary">← Back to inventory</a></div>
+<div class="content-card form-card"><form asp-action="Edit" method="post"><input type="hidden" asp-for="Id" /><partial name="_ProductForm" model="Model" /></form></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

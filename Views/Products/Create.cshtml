@@ -1,0 +1,5 @@
+@model Product
+@{ ViewData["Title"] = "Add Product"; ViewData["SubmitLabel"] = "Save Product"; }
+<div class="page-heading"><div><p class="eyebrow mb-1">INVENTORY SETUP</p><h1 class="h2 fw-bold mb-1">Add a product</h1><p class="text-secondary mb-0">Enter product details and opening stock.</p></div><a asp-action="Index" class="btn btn-outline-secondary">← Back to inventory</a></div>
+<div class="content-card form-card"><form asp-action="Create" method="post"><partial name="_ProductForm" model="Model" /></form></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

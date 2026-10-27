@@ -1,0 +1,44 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var lowStock = ViewBag.LowStockProducts as List<Product> ?? new List<Product>();
+}
+<div class="hero-panel mb-4">
+    <div>
+        <p class="eyebrow mb-2">INVENTORY OVERVIEW</p>
+        <h1 class="display-6 fw-bold mb-2">Good stock management starts here.</h1>
+        <p class="mb-0 hero-subtitle">Track products, monitor stock levels, and keep your inventory organized.</p>
+    </div>
+    <a asp-controller="Products" asp-action="Create" class="btn btn-light btn-lg fw-semibold">＋ Add Product</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-icon purple">▦</div><div class="stat-label">Total Products</div><div class="stat-value">@ViewBag.ProductCount</div><div class="stat-note">Different items</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-icon blue">▤</div><div class="stat-label">Units in Stock</div><div class="stat-value">@ViewBag.StockUnits</div><div class="stat-note">Across all products</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-icon green">₹</div><div class="stat-label">Inventory Value</div><div class="stat-value">₹@(((decimal)ViewBag.InventoryValue).ToString("N2"))</div><div class="stat-note">Price × quantity</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-icon orange">!</div><div class="stat-label">Low Stock Items</div><div class="stat-value">@ViewBag.LowStockCount</div><div class="stat-note">At or below reorder level</div></div></div>
+</div>
+
+<div class="content-card">
+    <div class="section-heading">
+        <div><h2 class="h5 fw-bold mb-1">Low stock alerts</h2><p class="text-secondary mb-0 small">Items that may need restocking soon.</p></div>
+        <a asp-controller="Products" asp-action="Index" asp-route-stock="low" class="btn btn-outline-primary">View all alerts</a>
+    </div>
+    @if (lowStock.Count == 0)
+    {
+        <div class="empty-state"><div class="empty-icon">✓</div><h3 class="h6 fw-bold">Everything looks good</h3><p class="text-secondary mb-0">No products are currently at their reorder level.</p></div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead><tr><th>Product</th><th>SKU</th><th>Category</th><th>Available</th><th>Reorder level</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var p in lowStock)
+                {
+                    <tr><td class="fw-semibold">@p.Name</td><td><span class="sku">@p.SKU</span></td><td>@p.Category</td><td><span class="stock-badge low">@p.Quantity left</span></td><td>@p.ReorderLevel</td><td><a asp-controller="Products" asp-action="Edit" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Update</a></td></tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

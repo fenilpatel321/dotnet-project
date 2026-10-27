@@ -1,0 +1,17 @@
+@model Product
+@{ ViewData["Title"] = "Product Details"; }
+<div class="page-heading"><div><p class="eyebrow mb-1">PRODUCT RECORD</p><h1 class="h2 fw-bold mb-1">@Model.Name</h1><p class="text-secondary mb-0">Full details for this inventory item.</p></div><div class="d-flex gap-2"><a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit product</a><a asp-action="Index" class="btn btn-outline-secondary">Back</a></div></div>
+<div class="content-card details-card">
+    <div class="product-avatar">@Model.Name.Substring(0, 1).ToUpperInvariant()</div>
+    <span class="stock-badge @(Model.Quantity <= Model.ReorderLevel ? "low" : "good")">@(Model.Quantity <= Model.ReorderLevel ? "Low stock" : "In stock")</span>
+    <div class="row g-4 mt-2">
+        <div class="col-sm-6"><div class="detail-label">Product name</div><div class="detail-value">@Model.Name</div></div>
+        <div class="col-sm-6"><div class="detail-label">SKU / code</div><div class="detail-value">@Model.SKU</div></div>
+        <div class="col-sm-6"><div class="detail-label">Category</div><div class="detail-value">@Model.Category</div></div>
+        <div class="col-sm-6"><div class="detail-label">Supplier</div><div class="detail-value">@(Model.Supplier ?? "Not specified")</div></div>
+        <div class="col-sm-6"><div class="detail-label">Unit price</div><div class="detail-value">₹@Model.Price.ToString("N2")</div></div>
+        <div class="col-sm-6"><div class="detail-label">Quantity</div><div class="detail-value">@Model.Quantity units</div></div>
+        <div class="col-sm-6"><div class="detail-label">Reorder level</div><div class="detail-value">@Model.ReorderLevel units</div></div>
+        <div class="col-sm-6"><div class="detail-label">Total value</div><div class="detail-value">₹@((Model.Price * Model.Quantity).ToString("N2"))</div></div>
+    </div>
+</div>
